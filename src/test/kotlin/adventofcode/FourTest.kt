@@ -7,31 +7,24 @@ import java.io.File
 
 class FourTest {
 
-    private val input = File("src/test/resources/4-input.txt")
+    private val valid = File("src/test/resources/4-input-valid.txt")
+    private val invalid = File("src/test/resources/4-input-invalid.txt")
 
     @Test
     fun `kan splitte i pass`() {
-        assertEquals(4, input.passports().size)
-    }
-
-    @Test
-    fun `kan splitte i key value`() {
-        assertEquals(listOf(listOf(Pair("eyr", "gry"))), listOf("eyr:gry").toKeyValue())
-    }
-
-    @Test
-    fun `filterer bort invalid`() {
-        assertTrue(listOf(listOf(Pair("eyr", "gry"))).valid(listOf("eyr", "vg")).isEmpty())
-    }
-
-    @Test
-    fun `filterer ikke bort gyldig`() {
-        assertTrue(listOf(listOf(Pair("eyr", "gry"))).valid(listOf("eyr")).isNotEmpty())
-        assertTrue(listOf(listOf("eyr" to "gry", "arf" to "#123")).valid(listOf("eyr", "arf")).isNotEmpty())
+        assertEquals(4, valid.passports().size)
+        assertEquals(4, invalid.passports().size)
     }
 
     @Test
     fun test() {
-       assertEquals(2, Four(true).solve(input))
+        assertEquals(4, Four(true).solve(valid))
+        assertEquals(0, Four(true).solve(invalid))
+    }
+
+    @Test
+    fun range() {
+        assertEquals(11, (0..10).toList().size)
+        assertTrue("1920".toInt() in 1920..2020 )
     }
 }
