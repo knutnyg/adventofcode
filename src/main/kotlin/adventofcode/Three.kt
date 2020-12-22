@@ -3,7 +3,7 @@ package adventofcode
 import java.io.File
 
 
-class Three() {
+class Three(debug: Boolean = false) {
     companion object {
         private val input = File("src/main/resources/3-input.txt")
             .readLines()
@@ -15,7 +15,8 @@ class Three() {
             val oofs4 = drive(input, 7, 1)
             val oofs5 = drive(input, 1, 2)
 
-            println("You hit $oofs1 * $oofs2 * $oofs3 * $oofs4 * $oofs5 = ${oofs1 * oofs2 * oofs3 * oofs4 * oofs5} trees")
+            val product = oofs1 * oofs2 * oofs3 * oofs4 * oofs5
+            println("3: Svaret på A: $oofs2 og B: $product")
         }
     }
 }
@@ -24,6 +25,7 @@ internal fun drive(
     map: List<String>,
     slopeX: Int,
     slopeY: Int,
+    debug: Boolean = false
 ): Long {
     var i = slopeX * -1
     var j = 0
@@ -32,10 +34,14 @@ internal fun drive(
         i = (i + slopeX) % map.first().length
         val line = map[j]
         if (line[i] == '#') {
-            println("$j. " + line.replaceRange(i, i + 1, "X"))
+            if (debug) {
+                println("$j. " + line.replaceRange(i, i + 1, "X"))
+            }
             count += 1
         } else {
-            println("$j. " + line.replaceRange(i, i + 1, "O"))
+            if (debug) {
+                println("$j. " + line.replaceRange(i, i + 1, "O"))
+            }
         }
         j += slopeY
     }

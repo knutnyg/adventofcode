@@ -2,33 +2,38 @@ package adventofcode
 
 import java.io.File
 
-class One() {
-    companion object {
-        fun solve() {
-            val input = File("src/main/resources/1-input.txt")
-                .readLines()
-                .map(String::toInt)
+class One(val debug: Boolean = false) {
+    private val input = File("src/main/resources/1-input.txt")
+        .readLines()
+        .map(String::toInt)
 
-            input.forEach loop@{ a ->
-                input.forEach { b ->
-                    if (a + b == 2020) {
-                        println("$a + $b = 2020")
-                        println(a * b)
-                        return@loop
-                    }
+    fun solve() {
+        val a = solveA()
+        val b = solveB()
+        println("1: Svaret på A: $a, og B: $b")
+    }
+
+    private fun solveA(): Pair<Int, Int>? {
+        input.forEach loop@{ a ->
+            input.forEach { b ->
+                if (a + b == 2020) {
+                    return a to b
                 }
             }
+        }
+        return null
+    }
 
-            input.forEach loop@{ a ->
-                input.forEach { b ->
-                    input.forEach { c ->
-                        if (a + b + c == 2020) {
-                            println("$a + $b + $c = 2020")
-                            return@loop
-                        }
+    private fun solveB(): Triple<Int, Int, Int>? {
+        input.forEach loop@{ a ->
+            input.forEach { b ->
+                input.forEach { c ->
+                    if (a + b + c == 2020) {
+                        return Triple(a,b,c)
                     }
                 }
             }
         }
+        return null
     }
 }
